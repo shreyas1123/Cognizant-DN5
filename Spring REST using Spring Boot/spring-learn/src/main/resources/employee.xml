@@ -4,6 +4,24 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        https://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- Date Format bean for factory parsing -->
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="dd/MM/yyyy" />
+    </bean>
+
+    <bean id="dob1" factory-bean="dateFormat" factory-method="parse">
+        <constructor-arg value="31/12/1990" />
+    </bean>
+    <bean id="dob2" factory-bean="dateFormat" factory-method="parse">
+        <constructor-arg value="25/08/1995" />
+    </bean>
+    <bean id="dob3" factory-bean="dateFormat" factory-method="parse">
+        <constructor-arg value="15/03/1993" />
+    </bean>
+    <bean id="dob4" factory-bean="dateFormat" factory-method="parse">
+        <constructor-arg value="01/01/1992" />
+    </bean>
+
     <!-- Hands-on 3: Define Skills -->
     <bean id="java" class="com.cognizant.springlearn.Skill">
         <property name="id" value="1" />
@@ -38,6 +56,8 @@
         <property name="name" value="John Doe" />
         <property name="salary" value="50000.0" />
         <property name="gender" value="Male" />
+        <property name="permanent" value="true" />
+        <property name="dateOfBirth" ref="dob1" />
         <property name="department" ref="tech" />
         <property name="skills">
             <list>
@@ -51,6 +71,8 @@
         <property name="name" value="Jane Smith" />
         <property name="salary" value="60000.0" />
         <property name="gender" value="Female" />
+        <property name="permanent" value="true" />
+        <property name="dateOfBirth" ref="dob2" />
         <property name="department" ref="tech" />
         <property name="skills">
             <list>
@@ -64,6 +86,8 @@
         <property name="name" value="Alice Johnson" />
         <property name="salary" value="55000.0" />
         <property name="gender" value="Female" />
+        <property name="permanent" value="false" />
+        <property name="dateOfBirth" ref="dob3" />
         <property name="department" ref="hr" />
         <property name="skills">
             <list>
@@ -76,6 +100,8 @@
         <property name="name" value="Bob Lee" />
         <property name="salary" value="45000.0" />
         <property name="gender" value="Male" />
+        <property name="permanent" value="true" />
+        <property name="dateOfBirth" ref="dob4" />
         <property name="department" ref="sales" />
         <property name="skills">
             <list>

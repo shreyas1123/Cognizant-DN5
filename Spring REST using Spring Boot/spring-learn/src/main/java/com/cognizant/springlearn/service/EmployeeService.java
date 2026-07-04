@@ -21,4 +21,14 @@ public class EmployeeService {
     public ArrayList<Employee> getAllEmployees() {
         return employeeDao.getAllEmployees();
     }
+
+    @Transactional
+    public void updateEmployee(Employee employee) throws com.cognizant.springlearn.service.exception.EmployeeNotFoundException {
+        employeeDao.updateEmployee(employee);
+    }
+
+    @Transactional
+    public void deleteEmployee(int id) throws com.cognizant.springlearn.service.exception.EmployeeNotFoundException {
+        employeeDao.deleteEmployee(id);
+    }
 }

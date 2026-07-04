@@ -28,4 +28,20 @@ public class EmployeeController {
         LOGGER.info("END getAllEmployees");
         return list;
     }
+
+    @org.springframework.web.bind.annotation.PutMapping("/employees")
+    public void updateEmployee(@org.springframework.web.bind.annotation.RequestBody @jakarta.validation.Valid Employee employee) throws com.cognizant.springlearn.service.exception.EmployeeNotFoundException {
+        LOGGER.info("START updateEmployee");
+        LOGGER.info("Updating employee: {}", employee);
+        employeeService.updateEmployee(employee);
+        LOGGER.info("END updateEmployee");
+    }
+
+    @org.springframework.web.bind.annotation.DeleteMapping("/employees/{id}")
+    public void deleteEmployee(@org.springframework.web.bind.annotation.PathVariable int id) throws com.cognizant.springlearn.service.exception.EmployeeNotFoundException {
+        LOGGER.info("START deleteEmployee");
+        LOGGER.info("Deleting employee with ID: {}", id);
+        employeeService.deleteEmployee(id);
+        LOGGER.info("END deleteEmployee");
+    }
 }

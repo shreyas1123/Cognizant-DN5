@@ -58,4 +58,13 @@ public class CountryController {
         LOGGER.info("END getCountry");
         return country;
     }
+
+    // Hands-on 4: POST country mapping with validation
+    @PostMapping("/countries")
+    public Country addCountry(@RequestBody @jakarta.validation.Valid Country country) {
+        LOGGER.info("START addCountry");
+        LOGGER.info("Country details: {}", country);
+        LOGGER.info("END addCountry");
+        return country;
+    }
 }
