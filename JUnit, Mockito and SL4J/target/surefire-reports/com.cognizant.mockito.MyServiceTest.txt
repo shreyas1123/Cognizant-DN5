@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: com.cognizant.junit.AllTests
+Test set: com.cognizant.mockito.MyServiceTest
 -------------------------------------------------------------------------------
-Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.205 s -- in com.cognizant.junit.AllTests
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.587 s -- in com.cognizant.mockito.MyServiceTest

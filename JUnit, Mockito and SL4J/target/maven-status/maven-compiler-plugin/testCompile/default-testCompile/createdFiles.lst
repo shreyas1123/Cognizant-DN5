@@ -1,5 +1,1 @@
-com\cognizant\junit\EvenCheckerTest.class
-com\cognizant\junit\PerformanceTesterTest.class
-com\cognizant\junit\OrderedTests.class
-com\cognizant\junit\ExceptionThrowerTest.class
-com\cognizant\junit\AllTests.class
+com\cognizant\mockito\MyServiceTest.class

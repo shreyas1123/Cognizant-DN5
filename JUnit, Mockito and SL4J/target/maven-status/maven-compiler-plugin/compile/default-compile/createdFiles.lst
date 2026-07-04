@@ -1,3 +1,2 @@
-com\cognizant\junit\EvenChecker.class
-com\cognizant\junit\PerformanceTester.class
-com\cognizant\junit\ExceptionThrower.class
+com\cognizant\mockito\MyService.class
+com\cognizant\mockito\ExternalApi.class
