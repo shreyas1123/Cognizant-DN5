@@ -1,2 +1,5 @@
-com\cognizant\junit\AssertionsTest.class
-com\cognizant\junit\BankAccountTest.class
+com\cognizant\junit\EvenCheckerTest.class
+com\cognizant\junit\PerformanceTesterTest.class
+com\cognizant\junit\OrderedTests.class
+com\cognizant\junit\ExceptionThrowerTest.class
+com\cognizant\junit\AllTests.class

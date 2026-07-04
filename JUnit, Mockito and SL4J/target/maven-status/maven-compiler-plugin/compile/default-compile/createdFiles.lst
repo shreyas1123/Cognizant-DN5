@@ -1,1 +1,3 @@
-com\cognizant\junit\BankAccount.class
+com\cognizant\junit\EvenChecker.class
+com\cognizant\junit\PerformanceTester.class
+com\cognizant\junit\ExceptionThrower.class
