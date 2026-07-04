@@ -13,12 +13,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.springframework.security.test.context.support.WithMockUser;
+
 /**
  * SpringLearnApplicationTests
  * Tests the endpoints using MockMVC as specified in pages 10-14 of the Spring REST document.
  */
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(username = "user", roles = {"USER"})
 public class SpringLearnApplicationTests {
 
     @Autowired
@@ -205,5 +208,44 @@ public class SpringLearnApplicationTests {
             org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete("/employees/99")
         );
         actionsNotFound.andExpect(status().isNotFound());
+    }
+
+    // JWT Test: Successful authenticate request with Basic credentials
+    @Test
+    @org.springframework.security.test.context.support.WithAnonymousUser
+    public void testAuthenticateSuccess() throws Exception {
+        mvc.perform(get("/authenticate")
+                .header("Authorization", "Basic dXNlcjpwd2Q=")) // user:pwd
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").exists())
+                .andExpect(jsonPath("$.token").isNotEmpty());
+    }
+
+    // JWT Test: Request /countries with a valid JWT token
+    @Test
+    @org.springframework.security.test.context.support.WithAnonymousUser
+    public void testRequestWithValidJwt() throws Exception {
+        // First authenticate
+        String responseContent = mvc.perform(get("/authenticate")
+                .header("Authorization", "Basic dXNlcjpwd2Q="))
+                .andReturn().getResponse().getContentAsString();
+        
+        String token = new com.fasterxml.jackson.databind.ObjectMapper()
+                .readTree(responseContent).get("token").asText();
+
+        // Perform request using Bearer token
+        mvc.perform(get("/countries")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
+    }
+
+    // JWT Test: Request /countries with an invalid JWT token
+    @Test
+    @org.springframework.security.test.context.support.WithAnonymousUser
+    public void testRequestWithInvalidJwt() throws Exception {
+        mvc.perform(get("/countries")
+                .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isUnauthorized());
     }
 }
