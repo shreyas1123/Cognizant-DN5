@@ -1,73 +1,72 @@
 package com.cognizant.springlearn;
 
+import com.cognizant.springlearn.controller.CountryController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * SpringLearnApplicationTests
- * Integration tests utilizing MockMvc to assert GET endpoints behavior.
+ * Tests the endpoints using MockMVC as specified in pages 10-14 of the Spring REST document.
  */
 @SpringBootTest
 @AutoConfigureMockMvc
-class SpringLearnApplicationTests {
+public class SpringLearnApplicationTests {
 
     @Autowired
-    private MockMvc mockMvc;
+    private CountryController countryController;
 
+    @Autowired
+    private MockMvc mvc;
+
+    // Test is the CountryController is loaded
     @Test
-    void contextLoads() {
+    public void contextLoads() {
+        assertNotNull(countryController);
     }
 
-    // Verify /hello endpoint returns "Hello World"
+    // Test service to get the country
     @Test
-    void testSayHello() throws Exception {
-        mockMvc.perform(get("/hello"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Hello World"));
+    public void testGetCountry() throws Exception {
+        ResultActions actions = mvc.perform(get("/country"));
+        actions.andExpect(status().isOk());
+        actions.andExpect(jsonPath("$.code").exists());
+        actions.andExpect(jsonPath("$.code").value("IN"));
+        actions.andExpect(jsonPath("$.name").exists());
+        actions.andExpect(jsonPath("$.name").value("India"));
     }
 
-    // Verify /country endpoint returns India Country properties
+    // Test get country service for exceptional scenario
     @Test
-    void testGetCountry() throws Exception {
-        mockMvc.perform(get("/country"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value("IN"))
-                .andExpect(jsonPath("$.name").value("India"));
+    public void testGetCountryException() throws Exception {
+        ResultActions actions = mvc.perform(get("/country/az"));
+        actions.andExpect(status().isBadRequest());
+        actions.andExpect(status().reason("Country Not found"));
     }
 
-    // Verify /countries endpoint returns all 4 configured countries
+    // Additional test for Hello World REST service
     @Test
-    void testGetCountries() throws Exception {
-        mockMvc.perform(get("/countries"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].code").value("IN"))
-                .andExpect(jsonPath("$[1].code").value("US"))
-                .andExpect(jsonPath("$[2].code").value("DE"))
-                .andExpect(jsonPath("$[3].code").value("JP"));
+    public void testSayHello() throws Exception {
+        ResultActions actions = mvc.perform(get("/hello"));
+        actions.andExpect(status().isOk())
+               .andExpect(jsonPath("$").value("Hello World!!"));
     }
 
-    // Verify /countries/{code} endpoint successfully finds and returns a country
+    // Additional test for get all countries service
     @Test
-    void testGetCountryByCodeSuccess() throws Exception {
-        mockMvc.perform(get("/countries/US"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value("US"))
-                .andExpect(jsonPath("$.name").value("United States"));
-    }
-
-    // Verify /countries/{code} endpoint throws 404 response on incorrect country code
-    @Test
-    void testGetCountryByCodeNotFound() throws Exception {
-        mockMvc.perform(get("/countries/XX"))
-                .andExpect(status().isNotFound());
+    public void testGetAllCountries() throws Exception {
+        ResultActions actions = mvc.perform(get("/countries"));
+        actions.andExpect(status().isOk())
+               .andExpect(jsonPath("$").isArray())
+               .andExpect(jsonPath("$[0].code").value("IN"))
+               .andExpect(jsonPath("$[1].code").value("US"));
     }
 }

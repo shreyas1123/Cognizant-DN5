@@ -1,4 +1,4 @@
-package com.cognizant.springlearn;
+package com.cognizant.springlearn.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Exercise 2: Hello World RESTful Web Service
- * Exposes a GET /hello endpoint returning "Hello World".
+ * Hello World RESTful Web Service
+ * Exposes a GET /hello endpoint returning "Hello World!!".
  */
 @RestController
 public class HelloController {
@@ -16,9 +16,8 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String sayHello() {
-        LOGGER.info("START sayHello - Received GET request on /hello");
-        String message = "Hello World";
-        LOGGER.debug("Response message: {}", message);
+        LOGGER.info("START sayHello");
+        String message = "Hello World!!";
         LOGGER.info("END sayHello");
         return message;
     }
