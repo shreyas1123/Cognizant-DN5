@@ -33,6 +33,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Spring TX for @Transactional -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+
         <!-- Spring Boot Starter Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

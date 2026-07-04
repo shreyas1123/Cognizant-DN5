@@ -69,4 +69,27 @@ public class SpringLearnApplicationTests {
                .andExpect(jsonPath("$[0].code").value("IN"))
                .andExpect(jsonPath("$[1].code").value("US"));
     }
+
+    // Hands-on 3: Test for GET /employees
+    @Test
+    public void testGetAllEmployees() throws Exception {
+        ResultActions actions = mvc.perform(get("/employees"));
+        actions.andExpect(status().isOk())
+               .andExpect(jsonPath("$").isArray())
+               .andExpect(jsonPath("$[0].name").value("John Doe"))
+               .andExpect(jsonPath("$[1].name").value("Jane Smith"))
+               .andExpect(jsonPath("$[2].name").value("Alice Johnson"))
+               .andExpect(jsonPath("$[3].name").value("Bob Lee"));
+    }
+
+    // Hands-on 3: Test for GET /departments
+    @Test
+    public void testGetAllDepartments() throws Exception {
+        ResultActions actions = mvc.perform(get("/departments"));
+        actions.andExpect(status().isOk())
+               .andExpect(jsonPath("$").isArray())
+               .andExpect(jsonPath("$[0].name").value("Human Resources"))
+               .andExpect(jsonPath("$[1].name").value("Technology"))
+               .andExpect(jsonPath("$[2].name").value("Sales"));
+    }
 }
