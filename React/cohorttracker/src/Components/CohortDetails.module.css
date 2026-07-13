@@ -1,0 +1,31 @@
+.box {
+  width: 300px;
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  vertical-align: top;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff;
+}
+
+dt {
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  color: #000;
+}
+
+dd {
+  margin: 0;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+dl {
+  margin: 0;
+  padding: 0;
+}
